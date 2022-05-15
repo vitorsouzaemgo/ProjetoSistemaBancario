@@ -70,7 +70,7 @@ while True:
             janela2.hide()
             janela4 = janela_usuario()
         else:
-            sg.popup('Usuário/Senha inválido(s)', title='Falha no Login')
+            sg.popup('Usuário/Senha inválido(s)', title='Falha no Login', font='Verdana')
     
     # Janela de Cadastro
     if window == janela3 and event == sg.WIN_CLOSED:
@@ -80,7 +80,7 @@ while True:
         janela1.un_hide()  
     if window == janela3 and event == 'Cadastrar':
         if Funcoes.validadeCPF(values['cpf']) == True:
-            sg.popup('Conta cadastrada com sucesso', title='Cadastro bem-sucedido')
+            sg.popup('Conta cadastrada com sucesso', title='Cadastro bem-sucedido', font='Verdana')
             janela3.hide()
             janela2 = janela_login()
     

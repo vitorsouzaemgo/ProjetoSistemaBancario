@@ -11,4 +11,3 @@ class ContaCorrente(Conta.ContaCorrente):
     def getChequeEspecial(self, chequeEspecial):
         self.__chequeEspecial = chequeEspecial
     
-    

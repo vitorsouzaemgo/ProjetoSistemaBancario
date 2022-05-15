@@ -13,11 +13,11 @@ class Conta:
     def getNumeroConta(self):
         return self.__numeroConta
     
-    def getTitular(self, numeroConta):
+    def getNumeroConta(self, numeroConta):
         self.__numeroConta = numeroConta
 
-    def getTitular(self):
+    def getSaldo(self):
         return self.__saldo
     
-    def getTitular(self, saldo):
+    def getSaldo(self, saldo):
         self.__saldo = saldo
