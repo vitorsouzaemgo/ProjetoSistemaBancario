@@ -7,17 +7,17 @@ class Conta:
     def getTitular(self):
         return self.__titular
     
-    def getTitular(self, titular):
+    def setTitular(self, titular):
         self.__titular = titular
 
     def getNumeroConta(self):
         return self.__numeroConta
     
-    def getNumeroConta(self, numeroConta):
+    def setNumeroConta(self, numeroConta):
         self.__numeroConta = numeroConta
 
     def getSaldo(self):
         return self.__saldo
     
-    def getSaldo(self, saldo):
+    def setSaldo(self, saldo):
         self.__saldo = saldo
