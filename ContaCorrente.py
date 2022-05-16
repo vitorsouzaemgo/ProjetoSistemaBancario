@@ -8,6 +8,6 @@ class ContaCorrente(Conta.ContaCorrente):
     def getChequeEspecial(self):
         return self.__chequeEspecial
     
-    def getChequeEspecial(self, chequeEspecial):
+    def setChequeEspecial(self, chequeEspecial):
         self.__chequeEspecial = chequeEspecial
     
