@@ -1,9 +1,9 @@
 import mysql.connector
 from mysql.connector import Error
+from sqlalchemy import true
 
-titular = "gabriel"
-numero = '1'
-saldo = '23.50'
+
+
 
 def conected() : #vai conectar o algoritmo ao banco de dados
   try:
@@ -22,10 +22,10 @@ def conected() : #vai conectar o algoritmo ao banco de dados
 #--------------------------------------------------------------------------------
 
 
-def insertTable () : #inserir na tabela
+def insertTable (numeroConta, titular, saldo, senha, cpf) : #inserir na tabela
  
-  dados = numero+ ',\''+titular+ '\','+saldo+ ')'
-  declaracao = """INSERT INTO contacorrente (numeroConta, titular, saldo) VALUES ("""
+  dados = numeroConta+ ',\''+titular+ '\','+saldo+ '\','+senha+'\','+cpf+')'
+  declaracao = """INSERT INTO contacorrente (numeroConta, titular, saldo, senha, cpf) VALUES ("""
   sql = declaracao + dados
 
   if con.is_connected(): 
@@ -48,8 +48,9 @@ def insertTable () : #inserir na tabela
       con.close()
       print("conexao ao MySql foi encerrada")
 #----------------------------------------------------------------------------------
-  
-def consult(numeroConta) : #consultar a tabela
+
+
+def consult(numeroConta) : #consultar a tabela, vai consultar apartir do numero da conta do usuario, vai retornar o saldo do usuario
   try:
     conected()
     consulta_sql = 'SELECT * from contacorrente WHERE numeroConta = '+numeroConta
@@ -61,26 +62,40 @@ def consult(numeroConta) : #consultar a tabela
       print("numero conta: ", linha[0])
       print("titular: ", linha[1])
       print("saldo", linha[2])
-      
+    
+    return linha[2]
   except Error as erro:
     print("falha ao consultar dado", format(erro))
     
-  #finally:
-  if(con.is_connected()) :
-    cursor.close()
-    con.close()
-
+  finally:
+    if(con.is_connected()) :
+      cursor.close()
+      con.close()
 #------------------------------------------------------------------------------------
 
 
-def updateTable (declaracao) : #vai atualizar a tabela
+def updateTable (numeroConta, deposito, saldoAnterior, escolha) : #vai atualizar a tabela, no caso ele vai atualizar o saldo do cliente
+  
+  if escolha : #se for depositar ele vai somar o valor do deposito com o que ja tem na conta
+    deposito=float(deposito) + float(saldoAnterior)
+    deposito = str(deposito)
+    print(deposito)
+  else : #se for retirar dinheiro ele vai retirar o valor que ja ta na conta
+    deposito=float(saldoAnterior)-float(deposito) 
+    deposito = str(deposito)
+    print(deposito)
+    
+    
+    
+  declaracao = """UPDATE contacorrente SET saldo ="""+deposito+ """ WHERE numeroConta = """+numeroConta
+  
   try:
     conected()
-    altera_conta = declaracao
+    
     cursor = con.cursor()
-    cursor.execute(altera_conta)
+    cursor.execute(declaracao)
     con.commit()
-    print("preco alterado com sucesso!")
+    print("deposito alterado com sucesso!")
     
   except Error as erro:
     print("falha ao alterar tabela", format(erro))
@@ -92,16 +107,24 @@ def updateTable (declaracao) : #vai atualizar a tabela
 #---------------------------------------------------------------------------------------      
   
 if __name__=='__main__':
-  print("atualizar preco de produtos no banco de dados")
-  print("entre com os dados conforme solicitado:")
+  print("entre com os dados conforme solicitado: ")
   
+  #valores iniciais para teste
+  titular = 'gabriel'
+  deposito = '55.00'
+  numeroConta = '1'
+  saldo='0'
+  senha='12345678'
+  cpf='11111111111'
   
-  numeroConta = '1' #input("digite o numero da sua conta: ")
-  consult(numeroConta)
+  insertTable (numeroConta, titular, saldo, senha, cpf)
+  escolha = true
+  
+  saldoAnterior = consult(numeroConta)
   
   print("digite quanto quer depositar: ")
-  deposito = '25.00'
+  print("saldo da conta: ", saldoAnterior)
   
-  declaracao = """UPDATE contacorrente"""
   
+  updateTable(numeroConta, deposito, consult(numeroConta), escolha)
   
