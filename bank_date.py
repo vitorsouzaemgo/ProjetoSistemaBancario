@@ -25,7 +25,7 @@ def conected() : #vai conectar o algoritmo ao banco de dados
 def insertTable (numeroConta, titular, saldo, senha, cpf) : #inserir na tabela
  
   dados = numeroConta+ ',\''+titular+ '\','+saldo+ '\','+senha+'\','+cpf+')'
-  declaracao = """INSERT INTO contacorrente (numeroConta, titular, saldo, senha, cpf) VALUES ("""
+  declaracao = """INSERT INTO contaCorrente (numeroConta, titular, saldo, senha, cpf) VALUES ("""
   sql = declaracao + dados
 
   if con.is_connected(): 
@@ -53,7 +53,7 @@ def insertTable (numeroConta, titular, saldo, senha, cpf) : #inserir na tabela
 def consult(numeroConta) : #consultar a tabela, vai consultar apartir do numero da conta do usuario, vai retornar o saldo do usuario
   try:
     conected()
-    consulta_sql = 'SELECT * from contacorrente WHERE numeroConta = '+numeroConta
+    consulta_sql = 'SELECT * from contaCorrente WHERE numeroConta = '+numeroConta
     cursor = con.cursor()
     cursor.execute(consulta_sql)
     linhas = cursor.fetchall() #retorna as linha da tabela
