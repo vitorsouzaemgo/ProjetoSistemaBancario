@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 import Funcoes
+from bank_date import *
 
 # Layout
 
@@ -13,8 +14,10 @@ def janela_inicial():
 def janela_login():
     sg.theme('Material1')
     layout = [
-        [sg.Text('Usuário', size=(7,1)), sg.Input(key='usuario', size=(21,1))],
-        [sg.Text(' Senha', size=(7,1)), sg.Input(key='senha',password_char='*', size=(21,2))],
+        [sg.Text('CPF', size=(7,1)), sg.Input(key='cpf1', size=(26,1))],
+        [sg.Text('Senha', size=(7,1)), sg.Input(key='senha1',password_char='*', size=(26,2))],
+        [sg.Radio('Conta Corrente', "radio1", key='corrente1', default=True), 
+         sg.Radio('Conta Poupança', "radio1", key='poupanca1', default=False)],
         [sg.Checkbox('Manter-me conectado')],
         [sg.Button('Entrar'), sg.Button('Voltar')]
 ]
@@ -24,10 +27,10 @@ def janela_cadastro():
     sg.theme('Material1')
     layout = [
         [sg.Text('Nome do Titular', size=(14,1)), sg.Input(key='titular', size=(30,2))],
-        [sg.Text('Senha', size=(14,1)), sg.Input(key='senha',password_char='*', size=(30,2))],
-        [sg.Text('CPF', size=(14,1)), sg.Input(key='cpf', size=(30,2))],
-        [sg.Text('Tipo de conta:'), sg.Radio('Conta Corrente', "radio1", default=True), 
-         sg.Radio('Conta Poupança', "radio1", default=False)],
+        [sg.Text('Senha', size=(14,1)), sg.Input(key='senha2',password_char='*', size=(30,2))],
+        [sg.Text('CPF', size=(14,1)), sg.Input(key='cpf2', size=(30,2))],
+        [sg.Text('Tipo de conta:'), sg.Radio('Conta Corrente', "radio1", key='corrente2', default=True), 
+         sg.Radio('Conta Poupança', "radio1", key='poupanca2', default=False)],
         [sg.Button('Cadastrar'), sg.Button('Voltar')]
 ]
     return sg.Window('Criar conta', layout=layout, finalize=True)
