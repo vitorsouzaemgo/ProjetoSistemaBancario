@@ -14,8 +14,8 @@ def janela_inicial():
 def janela_login():
     sg.theme('Material1')
     layout = [
-        [sg.Text('CPF', size=(7,1)), sg.Input(key='cpf1', size=(26,1))],
-        [sg.Text('Senha', size=(7,1)), sg.Input(key='senha1',password_char='*', size=(26,2))],
+        [sg.Text('CPF', size=(7,1)), sg.Input(key='cpf', size=(26,1))],
+        [sg.Text('Senha', size=(7,1)), sg.Input(key='senha',password_char='*', size=(26,2))],
         [sg.Radio('Conta Corrente', "radio1", key='corrente1', default=True), 
          sg.Radio('Conta Poupança', "radio1", key='poupanca1', default=False)],
         [sg.Checkbox('Manter-me conectado')],
@@ -69,7 +69,9 @@ while True:
         janela2.hide()
         janela1.un_hide()
     if event == 'Entrar':
-        if values['usuario'] == 'user' and values['senha'] == '123':
+        cpf1 = consult(values['cpf'])
+        print(cpf1)
+        if values['cpf'] == cpf1[4] and values['senha'] == cpf1[3]:
             janela2.hide()
             janela4 = janela_usuario()
         else:
@@ -81,9 +83,9 @@ while True:
     if window == janela3 and event == 'Voltar':
         janela3.hide()
         janela1.un_hide()  
-    if window == janela3 and event == 'Cadastrar':
-        if Funcoes.validadeCPF(values['cpf']) == True:
-            sg.popup('Conta cadastrada com sucesso', title='Cadastro bem-sucedido', font='Verdana')
+    if window == janela3 and event == 'Solicitar':
+        if Funcoes.validadeCPF(values['cpf2']) == True:
+            sg.popup('Solicitação realizada com sucesso', title='Solicitação bem-sucedida', font='Verdana')
             janela3.hide()
             janela2 = janela_login()
     

@@ -1,4 +1,6 @@
 import PySimpleGUI as sg
+import random
+import bank_date
 
 def validadeCPF(cpf):
     if len(cpf) != 11:
@@ -25,3 +27,14 @@ def validadeCPF(cpf):
                 sg.popup('Número de CPF inválido', title='Falha no Cadastro', font='Verdana')
             else:
                 return True
+
+# def definirNumeroConta():
+
+#     x = random.randint(10000000,99999999)
+#     while str(x) == bank_date.consultTable(x):
+#         x = random.randint(10000000,99999999)
+#         print(x)
+#         break
+#     print(x)
+
+# definirNumeroConta()

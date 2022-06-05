@@ -1,24 +1,32 @@
-CREATE TABLE contaCorrente (
-	`numeroConta` int not null,
+CREATE TABLE `contasBancarias`.`contaCorrente` (
+	  `cpf` varchar(11),
+    `numeroConta` varchar(10) not null,
     `titular` varchar(80),
     `saldo` real,
+    `senha` varchar(20),
+    `chequeEspecial` real
+    `agencia` varchar(10)
+    `nomeGerente` varchar(80)
 
-    primary key(numeroConta)
+    primary key(cpf)
 );
 
-CREATE TABLE contaPoupanca (
-	`numeroConta` integer not null,
+CREATE TABLE `contasBancarias`.`contaPoupanca` (
+    `cpf` varchar(11),
+    `numeroConta` varchar(10) not null,
     `titular` varchar(80),
     `saldo` real,
-    `tavaDiaria` real,
-	primary key(numeroConta)
+    `senha` varchar(20),
+    `taxaDiaria` real
+    `agencia` varchar(10)
+    `nomeGerente` varchar(80)
+	primary key(cpf)
 );
 
-CREATE TABLE `deposito` (
-  `numeroDeposito` int NOT NULL,
+CREATE TABLE `contasBancarias`.`extrato` (
   `numeroConta` int NOT NULL,
+  `operacao` varchar(20) NOT NULL,
   `titular` varchar(80) DEFAULT NULL,
-  `saldo` double DEFAULT NULL,
-  `valorDeposito` double DEFAULT NULL,
-  PRIMARY KEY (`numeroDeposito`)
+  `valorOperacao` double DEFAULT NULL,
+  PRIMARY KEY (`numeroConta`)
 );
