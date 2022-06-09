@@ -1,6 +1,8 @@
 import PySimpleGUI as sg
 import random
-import bank_date
+
+from sqlalchemy import null
+import funcao_sql.bank_date as bank_date
 
 def validadeCPF(cpf):
     if len(cpf) != 11:
@@ -28,13 +30,14 @@ def validadeCPF(cpf):
             else:
                 return True
 
-# def definirNumeroConta():
+def definirNumeroConta():
 
-#     x = random.randint(10000000,99999999)
-#     while str(x) == bank_date.consultTable(x):
-#         x = random.randint(10000000,99999999)
-#         print(x)
-#         break
-#     print(x)
+    x=bank_date.consultTable('10')
+    print(type(x))
+    while null == bank_date.consultTable(x):    
+        x = random.randint(10000000,99999999)
+        print(x)        
 
-# definirNumeroConta()
+
+if __name__=='__main__' :
+    definirNumeroConta()
