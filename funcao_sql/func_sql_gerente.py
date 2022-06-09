@@ -8,7 +8,7 @@ def CriaNovaConta (titular, senha, cpf, tipoConta) : #vai criar conta
   try:
     con = bank_date.conected()
     cursor = con.cursor()
-    
+     
     if tipoConta == 'contaCorrente' :
       declaracao = f'INSERT INTO `contasbancarias`.`contaCorrente` ( `titular`, `saldo`, `senha`, `cpf`) VALUES ( "{titular}", 0, "{senha}", "{cpf}");'
     elif tipoConta == 'contaPoupanca' :

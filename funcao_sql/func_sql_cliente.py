@@ -8,7 +8,7 @@ def deposito (cpf, valor, tipoConta) : #vai atualizar a tabela, no caso ele vai 
   conta = f'UPDATE `contasbancarias`.`{tipoConta}` SET saldo = saldo + {valor} WHERE cpf = "{cpf}"'#vai atualizar o saldo na conta
   valor = f'VALUE ("{contaLinha[0]}", "{contaLinha[1]}", "{contaLinha[2]}", "{valor}", "1")'#vai pegar os dados do cadastro para ser inserido na tabela de extrato
   extrato = 'INSERT INTO `contasbancarias`.`extrato` (`numeroConta`, `titular`, `saldo`, `valorDeposito`, `tipoOperacao`) '+valor
-  
+   
   try:
     con = bank_date.conected()
     

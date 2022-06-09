@@ -3,7 +3,7 @@ from mysql.connector import Error
 
 
 def conected() : #vai conectar o algoritmo ao banco de dados
-  try:
+  try: 
     global con
     con = mysql.connector.connect(host='localhost', database='contasBancarias', user='root', password='12345678')
     #host: se for um banco de dados que nao e local, precisa colocar o endereco da maquina em host

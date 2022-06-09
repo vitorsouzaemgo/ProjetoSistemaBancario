@@ -11,7 +11,7 @@ def janela_inicial():
     ]
     return sg.Window('Atendimento', layout=layout, finalize=True)
 
-def janela_login():
+def janela_login(): 
     sg.theme('Material1')
     layout = [
         [sg.Text('CPF', size=(7,1)), sg.Input(key='cpf', size=(26,1))],

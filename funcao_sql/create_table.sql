@@ -5,7 +5,7 @@ CREATE TABLE `contacorrente` (
   `saldo` double DEFAULT '0',
   `senha` varchar(45) NOT NULL,
   `cpf` varchar(45) NOT NULL,
-  `agencia` int NOT NULL,
+  `agencia` int NOT NULL, 
   PRIMARY KEY (`numeroConta`, `cpf`)
 );
 /*valores para testar nas funções*/

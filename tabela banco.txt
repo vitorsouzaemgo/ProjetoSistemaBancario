@@ -1,4 +1,4 @@
 criar uma nova tabela para cada usuario
-para guardar as operacoes
+para guardar as operacoes 
 
 
