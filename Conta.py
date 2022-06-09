@@ -7,7 +7,7 @@ class Conta:
     def getTitular(self):
         return self.__titular
     
-    def setTitular(self, titular):
+    def setTitular(self, titular): 
         self.__titular = titular
 
     def getNumeroConta(self):

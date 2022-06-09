@@ -12,4 +12,4 @@ class ContaPoupanca(Conta.ContaPoupanca):
         self.__taxaDiaria = taxaDiaria
 
     def atualizacaoDiaria(self):
-        self.__saldo = self.__saldo * 1.002
+        self.__saldo = self.__saldo * 1.002 
