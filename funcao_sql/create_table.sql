@@ -31,7 +31,7 @@ CREATE TABLE `contapoupanca` (
 
 /*criacao da tabela*/
 CREATE TABLE extrato (
-  `numeroOperacao` int NOT NULL,
+  `numeroOperacao` int NOT NULL AUTO_INCREMENT,
   `numeroConta` int NOT NULL,
   `titular` varchar(80) DEFAULT NULL,
   `saldo` double DEFAULT NULL,

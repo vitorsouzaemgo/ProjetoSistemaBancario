@@ -1,3 +1,4 @@
+from sqlite3 import connect
 import mysql.connector
 from mysql.connector import Error
 
@@ -10,7 +11,7 @@ def conected() : #vai conectar o algoritmo ao banco de dados
     #database: nome do banco de dados
     #user: o usuario que vai acessar o banco de dados
     #password: senha do banco de dados
-
+    print('conectado com sucesso')
   except Error as erro:
     print("falha ao inserir dados no MySQL: ", format(erro))
   
@@ -48,4 +49,6 @@ def consultTable(numero) : #consultar a tabela, vai consultar apartir do numero 
     con.close() 
 
   return numero
-  
+
+if __name__=='__main__':
+  conected()
