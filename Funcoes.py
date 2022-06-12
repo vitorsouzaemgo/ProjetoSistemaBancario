@@ -30,14 +30,14 @@ def validadeCPF(cpf):
             else:
                 return True
 
-def definirNumeroConta():
+# def definirNumeroConta():
 
-    x=bank_date.consultTable('10')
-    print(type(x))
-    while null == bank_date.consultTable(x):    
-        x = random.randint(10000000,99999999)
-        print(x)        
+#     x=bank_date.consultTable('10')
+#     print(type(x))
+#     while null == bank_date.consultTable(x):    
+#         x = random.randint(10000000,99999999)
+#         print(x)        
 
 
-if __name__=='__main__' :
-    definirNumeroConta()
+# if __name__=='__main__' :
+#     definirNumeroConta()
