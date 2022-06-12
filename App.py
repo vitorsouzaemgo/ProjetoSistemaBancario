@@ -4,6 +4,8 @@ from funcao_sql.bank_date import *
 
 # Layout
 
+global cpf1
+
 def janela_inicial():
     sg.theme('Reddit')
     layout = [
@@ -64,9 +66,33 @@ def janela_saque():
 ]
     return sg.Window('Criar conta', layout=layout, finalize=True)
 
+def janela_extrato():
+    sg.theme('Reddit')
+
+    font = ('Courier New', 16)
+    text = extrato(cpf1)
+    column = [[sg.Text(text, font=font)]]
+
+    layout = [
+        [sg.Column(column, size=(800, 300), scrollable=True, key = "Column")],
+        [sg.Button('Voltar'), sg.Button('↑', key = "up"), sg.Button('↓', key = "down")],
+    ]
+
+    window = sg.Window('Extrato', layout, finalize=True)
+
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            break
+        elif event == "down":
+            window['Column'].Widget.canvas.yview_moveto(1.0)
+        elif event == "up":
+            window['Column'].Widget.canvas.yview_moveto(0.0)
+        
+
 # Janelas iniciais
 
-janela1, janela2, janela3, janela4, janela5, janela6 = janela_inicial(), None, None, None, None, None
+janela1, janela2, janela3, janela4, janela5, janela6, janela7 = janela_inicial(), None, None, None, None, None, None
 
 # Eventos
 
@@ -93,7 +119,6 @@ while True:
         if values['corrente1'] == True:
             cpf1 = consult(values['cpf'], 'contacorrente')
             tipoc = 'contacorrente'
-            print(cpf1)
             if values['cpf'] == cpf1[4] and values['senha'] == cpf1[3]:
                 janela2.hide()
                 janela4 = janela_usuario()
@@ -102,7 +127,6 @@ while True:
         elif values['corrente1'] == False:
             cpf1 = consult(values['cpf'], 'contapoupanca')
             tipoc = 'contapoupanca'
-            print(cpf1)
             if values['cpf'] == cpf1[4] and values['senha'] == cpf1[3]:
                 janela2.hide()
                 janela4 = janela_usuario()
@@ -133,6 +157,9 @@ while True:
     if window == janela4 and event == 'Sacar':
         janela4.hide()
         janela6 = janela_saque()
+    if window == janela4 and event == 'Tirar Extrato':
+        janela4.hide()
+        janela7 = janela_extrato()
             
     
     # Janela de depósito
@@ -141,8 +168,30 @@ while True:
         break
     if window == janela5 and event == 'Voltar':
         janela5.hide()
-        janela4 = janela_usuario()
-    
-        
+        janela4.un_hide()
+    if window == janela5 and event == 'Confirmar':
+        deposito(cpf1[4], values['deposito'], 'contacorrente')
+        sg.popup('Depósito realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
+        janela5.hide()
+        janela4.un_hide()
     
     # Janela de saque
+
+    if window == janela6 and event == sg.WIN_CLOSED:
+        break
+    if window == janela6 and event == 'Voltar':
+        janela6.hide()
+        janela4.un_hide()
+    if window == janela6 and event == 'Confirmar':
+        saque(cpf1[4], values['saque'], 'contacorrente')
+        sg.popup('Saque realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
+        janela6.hide()
+        janela4.un_hide()
+
+    # Janela de extrato
+
+    if window == janela7 and event == sg.WIN_CLOSED:
+        break
+    if window == janela7 and event == 'Voltar':
+        janela7.hide()
+        janela4.un_hide()

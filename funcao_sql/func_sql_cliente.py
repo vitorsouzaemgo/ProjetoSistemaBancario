@@ -64,8 +64,8 @@ def saque (cpf, valor) : #vai atualizar a tabela após fazer o saque
     con.close()
 
     
-def extrato (numeroConta) :
-    sql = f'Select * from contasbancarias.extrato WHERE numeroConta={numeroConta}'
+def extrato (cpf) :
+    sql = f'Select * from contasbancarias.extrato WHERE cpf={cpf}'
     try:
         con = bank_date.conected()
         cursor = con.cursor()
