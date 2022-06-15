@@ -36,19 +36,19 @@ def consult(cpf, tipoConta) : #consultar a tabela, vai consultar apartir do nume
       con.close()
 #------------------------------------------------------------------------------------
 
-def consultTable(numero) : #consultar a tabela, vai consultar apartir do numero da conta do usuario, vai retornar o saldo do usuario
+# def consultTable(numero) : #consultar a tabela, vai consultar apartir do numero da conta do usuario, vai retornar o saldo do usuario
     
-  conected()
-  consulta_sql = f'SELECT * from contacorrente WHERE numeroConta = {numero}'
-  cursor = con.cursor()
-  cursor.execute(consulta_sql)
-  numero = cursor.fetchone() #retorna as linha da tabela  
+#   conected()
+#   consulta_sql = f'SELECT * from contacorrente WHERE numeroConta = {numero}'
+#   cursor = con.cursor()
+#   cursor.execute(consulta_sql)
+#   numero = cursor.fetchone() #retorna as linha da tabela  
 
-  if(con.is_connected()):
-    cursor.close()
-    con.close() 
+#   if(con.is_connected()):
+#     cursor.close()
+#     con.close() 
 
-  return numero
+#   return numero
 
 #------------------------------------------------------------------------------------
 
