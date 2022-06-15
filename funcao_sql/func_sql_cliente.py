@@ -6,8 +6,8 @@ def deposito (cpf, valor, tipoConta) : #vai atualizar a tabela, no caso ele vai 
     
   contaLinha=bank_date.consult(cpf, tipoConta) #vai pegar o cadastro e retornar a linha
   conta = f'UPDATE `contasbancarias`.`{tipoConta}` SET saldo = saldo + {valor} WHERE cpf = "{cpf}"'#vai atualizar o saldo na conta
-  valor = f'VALUE ("{contaLinha[0]}", "{contaLinha[1]}", "{contaLinha[2]}", "{valor}", "1")'#vai pegar os dados do cadastro para ser inserido na tabela de extrato
-  extrato = 'INSERT INTO `contasbancarias`.`extrato` (`numeroConta`, `titular`, `saldo`, `valorDeposito`, `tipoOperacao`) '+valor
+  valores = f'VALUE ("{contaLinha[0]}", "{contaLinha[1]}", "{contaLinha[2]}", "{valor}", "1")'#vai pegar os dados do cadastro para ser inserido na tabela de extrato
+  extrato = 'INSERT INTO `contasbancarias`.`extrato` (`numeroConta`, `titular`, `saldo`, `valorDeposito`, `tipoOperacao`) '+valores
    
   try:
     con = bank_date.conected()
@@ -64,8 +64,8 @@ def saque (cpf, valor) : #vai atualizar a tabela após fazer o saque
     con.close()
 
     
-def extrato (numeroConta) :
-    sql = f'Select * from contasbancarias.extrato WHERE numeroConta={numeroConta}'
+def extrato (cpf) :
+    sql = f'Select * from contasbancarias.extrato WHERE cpf={cpf}'
     try:
         con = bank_date.conected()
         cursor = con.cursor()
@@ -103,7 +103,3 @@ if __name__=='__main__':
     valor='200'
     tipoConta='contacorrente'
     deposito(cpf, valor, tipoConta)
-    
-    
-    
-        

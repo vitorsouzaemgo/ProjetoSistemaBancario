@@ -1,8 +1,13 @@
 import PySimpleGUI as sg
+from numpy import insert
 import Funcoes
 from funcao_sql.bank_date import *
 
 # Layout
+
+global cpf1
+global radioLogin
+global radioCadastro
 
 def janela_inicial():
     sg.theme('Reddit')
@@ -13,6 +18,7 @@ def janela_inicial():
 
 def janela_login(): 
     sg.theme('Material1')
+
     layout = [
         [sg.Text('CPF', size=(7,1)), sg.Input(key='cpf', size=(26,1))],
         [sg.Text('Senha', size=(7,1)), sg.Input(key='senha',password_char='*', size=(26,2))],
@@ -38,14 +44,28 @@ def janela_cadastro():
 def janela_usuario():
     sg.theme('Reddit')
     c = consult(values['cpf'], 'contacorrente')
-    layout = [
-        
-        [sg.Text('Titular: ', size=(7,1)), sg.Text(f'{c[1]}', size=(21,1))],
-        [sg.Text('Conta: ', size=(7,1)), sg.Text(f'{c[0]}', size=(21,1))],
-        [sg.Text('Saldo: ', size=(7,1)), sg.Text(f'{c[2]}', size=(21,1))],
-        [sg.Button('Depositar', size=(10,2)), sg.Button('Sacar', size=(10,2)), sg.Button('Tirar Extrato', size=(10,2))],
-        [sg.Button('Sair')]
-    ]
+    p = consult(values['cpf'], 'contapoupanca')
+
+    if values['corrente1'] == True:
+        layout = [
+            [sg.Text('Conta Corrente', size=(27,1), font='Roboto')],
+            [sg.Text()],
+            [sg.Text('Titular: ', size=(7,1)), sg.Text(f'{c[1]}', size=(21,1))],
+            [sg.Text('Conta: ', size=(7,1)), sg.Text(f'{c[0]}', size=(21,1))],
+            [sg.Text('Saldo: ', size=(7,1)), sg.Text(f'{c[2]}', size=(21,1))],
+            [sg.Button('Depositar', size=(10,2)), sg.Button('Sacar', size=(10,2)), sg.Button('Tirar Extrato', size=(10,2))],
+            [sg.Button('Sair')]
+        ]
+    if values['poupanca1'] == True:
+        layout = [
+            [sg.Text('Conta Poupança', size=(27,1), font='Roboto')],
+            [sg.Text()],
+            [sg.Text('Titular: ', size=(7,1)), sg.Text(f'{p[1]}', size=(21,1))],
+            [sg.Text('Conta: ', size=(7,1)), sg.Text(f'{p[0]}', size=(21,1))],
+            [sg.Text('Saldo: ', size=(7,1)), sg.Text(f'{p[2]}', size=(21,1))],
+            [sg.Button('Depositar', size=(10,2)), sg.Button('Sacar', size=(10,2)), sg.Button('Tirar Extrato', size=(10,2))],
+            [sg.Button('Sair')]
+        ]
     return sg.Window('Área do usuário', layout=layout, finalize=True)
 
 def janela_deposito():
@@ -64,9 +84,36 @@ def janela_saque():
 ]
     return sg.Window('Criar conta', layout=layout, finalize=True)
 
+def janela_extrato():
+    sg.theme('Reddit')
+
+    font = ('Courier New', 16)
+    temp = extrato(cpf1)
+    # text = '\n'.join(temp(i) for i in range(65, 91))
+    column = [
+        [sg.Text(f'{temp}', font=font)] 
+    ] 
+
+    layout = [
+        [sg.Column(column, size=(800, 300), scrollable=True, key = "Column")],
+        [sg.Button('Voltar'), sg.Button('↑', key = "up"), sg.Button('↓', key = "down")],
+    ]
+
+    window = sg.Window('Extrato', layout, finalize=True)
+
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            break
+        elif event == "down":
+            window['Column'].Widget.canvas.yview_moveto(1.0)
+        elif event == "up":
+            window['Column'].Widget.canvas.yview_moveto(0.0)
+        
+
 # Janelas iniciais
 
-janela1, janela2, janela3, janela4, janela5, janela6 = janela_inicial(), None, None, None, None, None
+janela1, janela2, janela3, janela4, janela5, janela6, janela7 = janela_inicial(), None, None, None, None, None, None
 
 # Eventos
 
@@ -91,19 +138,19 @@ while True:
         janela1.un_hide()
     if event == 'Entrar':
         if values['corrente1'] == True:
+            radioLogin = True
             cpf1 = consult(values['cpf'], 'contacorrente')
             tipoc = 'contacorrente'
-            print(cpf1)
             if values['cpf'] == cpf1[4] and values['senha'] == cpf1[3]:
                 janela2.hide()
                 janela4 = janela_usuario()
             else:
                 sg.popup('Usuário/Senha inválido(s)', title='Falha no Login', font='Verdana')
-        elif values['corrente1'] == False:
+        elif values['poupanca1'] == True:
+            radioLogin = False
             cpf1 = consult(values['cpf'], 'contapoupanca')
             tipoc = 'contapoupanca'
-            print(cpf1)
-            if values['cpf'] == cpf1[4] and values['senha'] == cpf1[3]:
+            if values['cpf'] == cpf1[5] and values['senha'] == cpf1[4]:
                 janela2.hide()
                 janela4 = janela_usuario()
             else:
@@ -115,11 +162,26 @@ while True:
     if window == janela3 and event == 'Voltar':
         janela3.hide()
         janela1.un_hide()  
-    if window == janela3 and event == 'Solicitar':
+    if window == janela3 and event == 'Cadastrar':
         if Funcoes.validadeCPF(values['cpf2']) == True:
-            sg.popup('Solicitação realizada com sucesso', title='Solicitação bem-sucedida', font='Verdana')
-            janela3.hide()
-            janela2 = janela_login()
+            if values['corrente2'] == True:
+                radioCadastro = True
+                if consult(values['cpf2'], 'contacorrente') == None:
+                    CriaNovaConta(values['titular'], values['senha2'], values['cpf2'], 'contacorrente')
+                    sg.popup('Cadastro realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
+                    janela3.hide()
+                    janela2 = janela_login()
+                else:
+                    sg.popup('CPF já cadastrado!', title='Erro na operação', font='Verdana')
+            if values['poupanca2'] == True:
+                radioCadastro = False
+                if consult(values['cpf2'], 'contapoupanca') == None:
+                    CriaNovaConta(values['titular'], values['senha2'], values['cpf2'], 'contapoupanca')
+                    sg.popup('Cadastro realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
+                    janela3.hide()
+                    janela2 = janela_login()
+                else:
+                    sg.popup('CPF já cadastrado!', title='Erro na operação', font='Verdana')
     
     # Janela do usuário
     if window == janela4 and event == sg.WIN_CLOSED:
@@ -133,6 +195,9 @@ while True:
     if window == janela4 and event == 'Sacar':
         janela4.hide()
         janela6 = janela_saque()
+    if window == janela4 and event == 'Tirar Extrato':
+        janela4.hide()
+        janela7 = janela_extrato()
             
     
     # Janela de depósito
@@ -141,8 +206,36 @@ while True:
         break
     if window == janela5 and event == 'Voltar':
         janela5.hide()
-        janela4 = janela_usuario()
-    
-        
+        janela4.un_hide()
+    if window == janela5 and event == 'Confirmar':
+        if radioLogin == True:
+            deposito(cpf1[4], values['deposito'], 'contacorrente')
+            sg.popup('Depósito realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
+            janela5.hide()
+            janela4.un_hide()
+        if radioLogin == False:
+            deposito(cpf1[5], values['deposito'], 'contapoupanca')
+            sg.popup('Depósito realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
+            janela5.hide()
+            janela4.un_hide()
     
     # Janela de saque
+
+    if window == janela6 and event == sg.WIN_CLOSED:
+        break
+    if window == janela6 and event == 'Voltar':
+        janela6.hide()
+        janela4.un_hide()
+    if window == janela6 and event == 'Confirmar':
+        if radioLogin == True:
+            print(type(cpf1[4]))
+            saque(cpf1[4], values['saque'], 'contacorrente')
+            print(type(cpf1[4]))
+            sg.popup('Saque realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
+            janela5.hide()
+            janela4.un_hide()
+        if radioLogin == False:
+            saque(cpf1[5], values['saque'], 'contapoupanca')
+            sg.popup('Saque realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
+            janela5.hide()
+            janela4.un_hide()
