@@ -151,7 +151,6 @@ def saque (cpf, valor, tipoConta) : #vai atualizar a tabela após fazer o saque
   if(con.is_connected()) :
     cursor.close()
     con.close()
-
 #------------------------------------------------------------------------------------
 
 def extrato (cpf) :
