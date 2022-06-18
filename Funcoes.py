@@ -29,15 +29,3 @@ def validadeCPF(cpf):
                 sg.popup('Número de CPF inválido', title='Falha no Cadastro', font='Verdana')
             else:
                 return True
-
-# def definirNumeroConta():
-
-#     x=bank_date.consultTable('10')
-#     print(type(x))
-#     while null == bank_date.consultTable(x):    
-#         x = random.randint(10000000,99999999)
-#         print(x)        
-
-
-# if __name__=='__main__' :
-#     definirNumeroConta()

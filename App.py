@@ -239,11 +239,3 @@ while True:
             sg.popup('Saque realizado com sucesso', title='Operação bem-sucedida', font='Verdana')
             janela5.hide()
             janela4.un_hide()
-
-    # Janela de extrato
-
-    # if window == janela7 and event == sg.WIN_CLOSED:
-    #     break
-    # if window == janela7 and event == 'Voltar':
-    #     janela7.hide()
-    #     janela4.un_hide()

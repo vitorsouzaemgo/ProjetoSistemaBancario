@@ -56,6 +56,4 @@ if __name__=='__main__':
   conta = '13'
   CriaNovaConta(titular, senha, cpf, 'contaPoupanca')
   
-  #consultaConta(conta)
-  
   

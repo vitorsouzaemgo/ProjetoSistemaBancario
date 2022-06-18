@@ -103,7 +103,3 @@ if __name__=='__main__':
     valor='200'
     tipoConta='contacorrente'
     deposito(cpf, valor, tipoConta)
-    
-    
-    
-        
